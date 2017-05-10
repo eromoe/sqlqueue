@@ -3,11 +3,11 @@
 # @Author: mithril
 # @Date:   2016-01-19 17:14:39
 # @Last Modified by:   mithril
-# @Last Modified time: 2016-01-20 10:23:18
+# @Last Modified time: 2017-05-10 10:25:22
 
+from __future__ import unicode_literals, print_function, absolute_import
 
 import os
-
 
 try:
     import cPickle as pickle
@@ -30,7 +30,7 @@ import sqlite3
 
 # The pysqlite2 installer you probably got from here contains sqlite3 compiled into _sqlite.pyd, it doesn't use the dll found in the DLLs directory (that one is only uset by the sqlite3 module).
 
-print sqlite3.sqlite_version
+# print(sqlite3.sqlite_version)
 
 # sqlite 3.7 + support  Write Ahead Logging” (WAL)
 # http://stackoverflow.com/questions/10325683/read-and-write-sqlite-database-data-concurrently-from-multiple-connections
@@ -86,6 +86,15 @@ class SqliteQueue(object):
             self._connection_cache[id] = sqlite3.Connection(self.path,
                     timeout=60)
         return self._connection_cache[id]
+
+    def close(self):
+        for id, conn in self._connection_cache.items():
+            conn.close()
+        self._connection_cache ={}
+
+
+    def qsize(self):
+        return len(self)
 
     def put(self, obj):
         obj_buffer = buffer(pickle.dumps(obj, 2))

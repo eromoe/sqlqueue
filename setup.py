@@ -3,16 +3,16 @@
 # @Author: mithril
 # @Date:   2016-01-20 09:22:44
 # @Last Modified by:   mithril
-# @Last Modified time: 2016-01-22 09:32:29
+# @Last Modified time: 2017-05-10 09:08:39
 
-
+from __future__ import unicode_literals, print_function, absolute_import
 import sys
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
 here = path.abspath(path.dirname(__file__))
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(path.join(here, 'README.md'), "r", encoding='utf-8') as f:
     long_description = f.read()
 
 
@@ -54,6 +54,5 @@ setup(
     install_requires=install_requires,
 
     py_modules=['sqlqueue'],
-    scripts=['sqlqueue.py'],
 
 )
